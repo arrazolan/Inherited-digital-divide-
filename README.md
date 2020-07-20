@@ -1,1 +1,2 @@
-# Inherited-digital-divide-
+# Inherited digital divide.
+
