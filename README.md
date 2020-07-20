@@ -11,5 +11,6 @@ As a result of these relationships between user’s characteristics and the infl
 
 
 References.
+
 SCT. 2018. “National Survey on Availability and Use of Information Technologies in Households (ENDUTIH) 2018.” 2018. Retrieved January 26, 2020 (http://en.www.inegi.org.mx/programas/dutih/2018/default.html#Open_data).
 StataCorp. 2019. “Stata Statistical Software: Release 16.”
