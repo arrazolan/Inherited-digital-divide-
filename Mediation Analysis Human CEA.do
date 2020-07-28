@@ -15,6 +15,7 @@ use "InheritedDigitalDivide_sample.dta",clear
 numlabel _all, add
 count	
 
+
 ************		MEDIATION ANALYSIS FOR HUMAN CEA			************
 *1) First we obtain the total effect c with a simple regression of eduparent on HCEA (equation 1 in Appendix G): 
 *We start with a simple regression to obtain the total effect (c)
@@ -22,7 +23,7 @@ reg HCEA_sd edu_parent_sd sexox_sd edadx_sd residence_type_sd
 
 *2) Then using sureg we obtain a’s, b’s and c’: 
 // this will calculate the 4 regression equations (3 times equation 3 (for each mediator) of Appendix G and the equation 2 of Appendix G)
-sureg (edu_userSD_sd edu_parent_sd skills_mri_sd ict_requipment_sd sexox_sd edadx_sd residence_type_sd) (skills_mri_sd edu_parent_sd edu_userSD_sd ict_requipment_sd sexox_sd edadx_sd residence_type_sd) (ict_requipment_sd edu_parent_sd skills_mri_sd edu_userSD_sd sexox_sd edadx_sd residence_type_sd) (HCEA_sd edu_parent_sd edu_userSD_sd skills_mri_sd ict_requipment_sd sexox_sd edadx_sd residence_type_sd)
+sureg (edu_userSD_sd edu_parent_sd sexox_sd edadx_sd residence_type_sd) (skills_mri_sd edu_parent_sd sexox_sd edadx_sd residence_type_sd) (ict_requipment_sd edu_parent_sd sexox_sd edadx_sd residence_type_sd) (HCEA_sd edu_parent_sd edu_userSD_sd skills_mri_sd ict_requipment_sd sexox_sd edadx_sd residence_type_sd)
 
 *3) Next we calculate the ab for each mediator and for the sum of the three mediators using lncom postestimation function for each mediator
 // sureg does not retun the ab term, so we use nl com.
@@ -52,7 +53,8 @@ nlcom [edu_userSD_sd]_b[edu_parent_sd] * [HCEA_sd]_b[edu_userSD_sd] + [ict_requi
 capture program drop multimed
 
 program multimed, rclass
-	sureg (edu_userSD_sd edu_parent_sd skills_mri_sd ict_requipment_sd sexox_sd edadx_sd residence_type_sd) (skills_mri_sd edu_parent_sd edu_userSD_sd ict_requipment_sd sexox_sd edadx_sd residence_type_sd) (ict_requipment_sd edu_parent_sd skills_mri_sd edu_userSD_sd sexox_sd edadx_sd residence_type_sd) (HCEA_sd edu_parent_sd edu_userSD_sd skills_mri_sd ict_requipment_sd sexox_sd edadx_sd residence_type_sd)  
+	sureg (edu_userSD_sd edu_parent_sd sexox_sd edadx_sd residence_type_sd) (skills_mri_sd edu_parent_sd sexox_sd edadx_sd residence_type_sd) (ict_requipment_sd edu_parent_sd sexox_sd edadx_sd residence_type_sd) (HCEA_sd edu_parent_sd edu_userSD_sd skills_mri_sd ict_requipment_sd sexox_sd edadx_sd residence_type_sd)
+
   return scalar indedu   = [edu_userSD_sd]_b[edu_parent_sd] * [HCEA_sd]_b[edu_userSD_sd]
   
   return scalar indequ   = [ict_requipment_sd]_b[edu_parent_sd] * [HCEA_sd]_b[ict_requipment_sd]
@@ -71,7 +73,8 @@ estat bootstrap, bc
 capture program drop pwcmed
 
 program pwcmed, rclass
-  	sureg (edu_userSD_sd edu_parent_sd skills_mri_sd ict_requipment_sd sexox_sd edadx_sd residence_type_sd) (skills_mri_sd edu_parent_sd edu_userSD_sd ict_requipment_sd sexox_sd edadx_sd residence_type_sd) (ict_requipment_sd edu_parent_sd skills_mri_sd edu_userSD_sd sexox_sd edadx_sd residence_type_sd) (HCEA_sd edu_parent_sd edu_userSD_sd skills_mri_sd ict_requipment_sd sexox_sd edadx_sd residence_type_sd)  
+  	sureg (edu_userSD_sd edu_parent_sd sexox_sd edadx_sd residence_type_sd) (skills_mri_sd edu_parent_sd sexox_sd edadx_sd residence_type_sd) (ict_requipment_sd edu_parent_sd sexox_sd edadx_sd residence_type_sd) (HCEA_sd edu_parent_sd edu_userSD_sd skills_mri_sd ict_requipment_sd sexox_sd edadx_sd residence_type_sd)
+
   
   return scalar eduminequ   = [edu_userSD_sd]_b[edu_parent_sd] * [HCEA_sd]_b[edu_userSD_sd] - [ict_requipment_sd]_b[edu_parent_sd] * [HCEA_sd]_b[ict_requipment_sd]
   
